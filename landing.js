@@ -97,7 +97,10 @@ async.parallel([
 					}
 				} else if (results[i].hasOwnProperty("inLinks")) {
 					var count = 0;
-					var total = results[i]["inLinks"][0]["totalLinks"];
+					var total = 0; 
+					if (results[i]["inLinks"][0]) {
+						total = results[i]["inLinks"][0]["totalLinks"];
+					}
 					for (var o = results[i]["inLinks"].length - 1; o >= 0; o--) {
 						if (results[i]["inLinks"][o]["destination"] === landingPage) {
 							count++;
@@ -116,7 +119,9 @@ async.parallel([
 					console.log(count + " outbound links from Landing Page contain keyword in anchor.");
 				}	else if (results[i].hasOwnProperty("inboundLinks")) {
 					var count = 0;
-					var total = results[i]["inboundLinks"][0]["totalLinks"];
+					var total = 0;
+					if (results[i]["inboundLinks"][0]) {
+						total = results[i]["inboundLinks"][0]["totalLinks"];}
 					for (var q = results[i]["inboundLinks"].length - 1; q >= 0; q--) {
 						if (results[i]["inboundLinks"][q]["target"] === landingPage) {
 							count++;
