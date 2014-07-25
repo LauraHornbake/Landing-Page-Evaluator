@@ -34,10 +34,10 @@ async.parallel([
 	function(callback) { urlFilter(urlsFile,process.argv[3],callback)},
 	function(callback) { titleFilter(titlesFile,process.argv[3],callback)},
 	function(callback) { metaFilter(metasFile,process.argv[3],callback)},
-	function(callback) { h1Filter(h1File,process.argv[3],callback)},
-	function(callback) { h2Filter(h2File,process.argv[3],callback)},
+	//function(callback) { h1Filter(h1File,process.argv[3],callback)},
+	//function(callback) { h2Filter(h2File,process.argv[3],callback)},
 	function(callback) { inLinksFilter(inLinksFile,process.argv[3],landingPage,callback)},
-	function(callback) { outLinksFilter(outLinksFile,process.argv[3],callback)},
+	//function(callback) { outLinksFilter(outLinksFile,process.argv[3],callback)},
 	function(callback) { inboundLinksFilter(inboundLinksFile,process.argv[3],landingPage,callback)}
 	],
 	function(err,results) {
@@ -138,9 +138,11 @@ async.parallel([
 						var keywordMatches = [],
 							h1Matches = [],
 							h2Matches = [],
-							linkMatches = [];
+							linkMatches = [],
+							h2s = 0,
+							h1s = 0,
+							links = 0;
 						$('body').each( function(i,elem) {
-							//console.log($(this).text());
 							var startIndex = 0,
 								index;
 							var searchStr = keyword.toLowerCase();
@@ -162,27 +164,35 @@ async.parallel([
 						});
 						$('a').each( function(i,elem) {
 							if ($(this).text().toLowerCase().indexOf(keyword.toLowerCase())!= -1) {
-								linkMatches.push($(this).text());
+								if (!$(this).parent().is('h2') && !$(this).parent().is('h1')) {
+									linkMatches.push($(this).text());
+								}
 							}
 						})
+						if (h2Matches.length>0) {h2s = 1};
+						if (h1Matches.length>0) {h1s = 1};
+						if (linkMatches.length>0) {links = 1};
 						textScore = keywordMatches.length - h1Matches.length - h2Matches.length - linkMatches.length;
 						console.log("Keyword is used " + textScore + " times in body text.");
-						final(textScore);
+						console.log(h1Matches.length + " Landing Page H1s contain keyword.");
+						console.log(h2Matches.length + " Landing Page H2s contain keyword.");
+						console.log(linkMatches.length + " links in Landing Page contain keyword.");
+						final(textScore,h2s,h1s,links);
 				}))
 			};
 			http.get(landingPage,getText);
 		}
-		function final (textScore) {
+		function final (textScore,h2s,h1s,links) {
 			console.log(
 				"\n------------------------------\n"+
 				"LANDING PAGE RAW SCORES (unweighted):\n" +
 				"URL score: " + urlScore + "\n" + 
 				"Title score: " + titleScore + "\n" + 
 				"Meta score: " + metaScore + "\n" + 
-				"H1 score: " + h1Score + "\n" + 
-				"H2 score: " + h2Score + "\n" + 
+				"H1 score: " + h1s + "\n" + 
+				"H2 score: " + h2s + "\n" + 
 				"Internal Links score: " + inLinksScore + "\n" + 
-				"Outbound Links score: " + outLinksScore + "\n" +
+				"Outbound Links score: " + links + "\n" +
 				"External Links score: " + inboundLinksScore + "\n" + 
 				"Body Text score: " + textScore + " keywords on page."
 			);
