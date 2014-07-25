@@ -13,12 +13,6 @@ var inLinksFilter = require('./inLinksFilter.js');
 var outLinksFilter = require('./outLinksFilter.js');
 var inboundLinksFilter = require('./inboundLinksFilter.js');
 var async = require('async');
-var csv = require('csv');
-var fs = require('fs');
-var http = require('http');
-var concatStream = require('concat-stream');
-var cheerio = require('cheerio');
-
 
 var urlsFile=process.argv[2]+'/uri_all.csv',
 	inLinksFile=process.argv[2]+'/all_in_links.csv',
@@ -43,16 +37,6 @@ async.parallel([
 		if (err) {
 			console.log('Fail!');
 		} else {
-			var landingPageScore = 0,
-				urlScore = 0,
-				titleScore = 0,
-				metaScore = 0,
-				h1Score = 0,
-				h2Score = 0,
-				inLinksScore = 0,
-				outLinksScore = 0,
-				inboundLinksScore = 0,
-				textScore = 0;
 			var urls = [],
 				titles = [],
 				metas = [],
