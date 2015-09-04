@@ -29,6 +29,7 @@ module.exports = function (file,keyword,callback) {
 				}
 			);
 		});
+	//console.log("Page title filter complete.");
 	}
 	fs.readFile(file, 'utf8', filter);
 };

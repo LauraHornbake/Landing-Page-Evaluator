@@ -22,8 +22,8 @@ var cheerio = require('cheerio');
 
 
 var urlsFile=process.argv[2]+'/uri_all.csv',
-	inLinksFile=process.argv[2]+'/all_in_links.csv',
-	outLinksFile=process.argv[2]+'/all_out_links.csv',
+	inLinksFile=process.argv[2]+'/all_inlinks.csv',
+	outLinksFile=process.argv[2]+'/all_outlinks.csv',
 	h2File=process.argv[2]+'/h2_all.csv',
 	h1File=process.argv[2]+'/h1_all.csv',
 	titlesFile=process.argv[2]+'/page_titles_all.csv',
@@ -127,7 +127,12 @@ async.parallel([
 							count++;
 						}
 					}
-					inboundLinksScore = (count/total);
+					if(total>0) {
+						inboundLinksScore = (count/total);
+					}
+					else {
+						inboundLinksScore = 0;
+					}
 					console.log(count + "/" + total + " external incoming links to Landing Page contain keyword in anchor.");
 				}
 			}

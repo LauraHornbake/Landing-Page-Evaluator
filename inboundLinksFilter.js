@@ -47,6 +47,7 @@ module.exports = function (file,keyword,landingPage,callback) {
 				}
 			);
 		});
+	//console.log("Inbound links filter complete.");
 	}
 
 	fs.readFile(file, 'utf8', filter);

@@ -10,10 +10,6 @@ module.exports = function (file,keyword,callback) {
 					if (s[2]) {
 						if (s[2].toLowerCase().indexOf(keyword)!=-1) {
 							return s;
-						} else {
-							if (s[4].toLowerCase().indexOf(keyword)!=-1){
-								return s;
-							}
 						}
 					}
 				},
@@ -25,15 +21,15 @@ module.exports = function (file,keyword,callback) {
 							result.url = data[i][0],
 							result.occurrences = data[i][1],
 							result.h21 = data[i][2],
-							result.h21Length = data[i][3],
-							result.h22 = data[i][4],
-							result.h22Length = data[i][5];
+							result.h21Length = data[i][3];
 						h2s.h2s.push(result);
 					}
 					callback(null,h2s);
 				}
 			);
 		});
+	//console.log("H2 filter complete");
+
 	}
 	fs.readFile(file, 'utf8', filter);
 };

@@ -30,6 +30,7 @@ module.exports = function (file,keyword,callback) {
 				}
 			);
 		});
+	//console.log("Url filter complete.");
 	}
 
 	fs.readFile(file, 'utf8', filter);

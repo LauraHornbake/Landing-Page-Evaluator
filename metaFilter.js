@@ -29,6 +29,7 @@ module.exports = function (file,keyword,callback) {
 				}
 			);
 		});
+	//console.log("Meta description filter complete.");	
 	}
 	fs.readFile(file, 'utf8', filter);
 };

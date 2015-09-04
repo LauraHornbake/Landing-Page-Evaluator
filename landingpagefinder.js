@@ -15,8 +15,8 @@ var inboundLinksFilter = require('./inboundLinksFilter.js');
 var async = require('async');
 
 var urlsFile=process.argv[2]+'/uri_all.csv',
-	inLinksFile=process.argv[2]+'/all_in_links.csv',
-	outLinksFile=process.argv[2]+'/all_out_links.csv',
+	inLinksFile=process.argv[2]+'/all_inlinks.csv',
+	outLinksFile=process.argv[2]+'/all_outlinks.csv',
 	h2File=process.argv[2]+'/h2_all.csv',
 	h1File=process.argv[2]+'/h1_all.csv',
 	titlesFile=process.argv[2]+'/page_titles_all.csv',
@@ -87,6 +87,7 @@ async.parallel([
 		}
 		var allArrays = urls.concat(titles,metas,h2s,h1s,inlinks,outlinks,inbndlinks);
 		var results = [];
+		var allPages;
 		for (var i = allArrays.length - 1; i >= 0; i--) {
 				if(allPages.indexOf(allArrays[i]) == -1) {
 					allPages.push(allArrays[i]);
